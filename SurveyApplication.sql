@@ -23,24 +23,27 @@ create table Surveys
     isClosed		boolean,
     isSuspended		boolean,
     primary key (surveyName, creatorEmail),
-    foreign key(userEmail) references Users(email)
+    foreign key(creatorEmail) references Users(email)
 );
 
 create table Questions
 (
-	questionID		varchar(100)	primary key,
+	questionNumber	int	,
 	question		varchar(100),
     questionType	varchar(100),
     surveyName		varchar(100),
     creatorEmail	varchar(100),
-    foreign key (surveyName,creatorEmail) references Surveys(surveyName, creatorEmail)
+    foreign key (surveyName,creatorEmail) references Surveys(surveyName, creatorEmail),
+    primary key (questionNumber,surveyName,creatorEmail)
 );
 
 create table choices
 (
 	choice			varchar(100),
-    questionID		varchar(100),
-    foreign key(questionID) references Questions(questionID)
+    questionNumber	int,
+    surveyName		varchar(100),
+    creatorEmail	varchar(100),
+    foreign key(questionNumber,surveyName,creatorEmail) references Questions(questionNumber,surveyName,creatorEmail)
 );
 
 create table Reports
@@ -57,11 +60,10 @@ create table answeredQuestions
 	surveyName	varchar(100),
     creatorEmail	varchar(100),
     userEmail		varchar(100),
-    questionID		varchar(100),
+    questionNumber	int,
     answer			varchar(200),
     
-    foreign key (surveyName,creatorEmail) references Surveys(surveyName, creatorEmail),
     foreign Key (userEmail) references Users (email),
-	foreign Key (questionID) references Questions (questionID)
+    foreign key(questionNumber,surveyName,creatorEmail) references Questions(questionNumber,surveyName,creatorEmail)
     
 );

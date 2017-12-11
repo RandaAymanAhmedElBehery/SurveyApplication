@@ -7,15 +7,15 @@ import java.sql.SQLException;
 public class DatabaseConnection 
 {
 	
-	private Connection connection;
+	private Connection conn;
 	
-	void connect()
+	public void connect()
 	{
-			setConnection(null);
-		try{
-			setConnection(DriverManager.getConnection("jdbc:mysql://localhost:3306/SurveyApplication?"+
-					"user=root&password=&characterEncoding=utf8"));
-			
+		
+		try
+		{
+			conn = DriverManager.getConnection
+					("jdbc:mysql://localhost:3306/SurveyApplication", "root","");
 		}
 		catch(SQLException Ex)
 		{
@@ -24,11 +24,12 @@ public class DatabaseConnection
 	}
 
 	public Connection getConnection() {
-		return connection;
+		connect();
+		return conn;
 	}
 
 	public void setConnection(Connection connection) {
-		this.connection = connection;
+		this.conn = connection;
 	}
 
 	

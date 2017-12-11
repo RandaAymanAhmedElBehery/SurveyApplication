@@ -12,12 +12,15 @@
 	
 		<form>
 			
+			<input id="Receipent" type="text" >
+			<button id="btn">Add Receipent</button>
 			
-		
 			<textarea rows="10" cols="50" placeholder="your message here"> </textarea>
-			
 			<input type="submit" value="Send">
+			
 		</form>
+		
+		<script src="js/ComposeMsg.js"></script>
 		
 	</body>
 

@@ -3,6 +3,7 @@ package com.SurveyApplication.Controllers;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -30,13 +31,20 @@ public class AddSurvey extends HttpServlet {
         // TODO Auto-generated constructor stub
     }
 
-	public void addQuestion(String survey , String email ,Question q)
+	public void addQuestion(String survey , String email ,Question q , int id)
 	{
 		DatabaseConnection dbc = new DatabaseConnection();
 		Connection conn = dbc.getConnection();
-		String query = "insert into question values( '" + /*Question ID*/ + "' , '" + q.getQuestion() + "','" + q.getType() + "','" + survey + "','" + email +"');" ;
-		PreparedStatement stmt = conn.prepareStatement("query");
-		stmt.executeUpdate();
+		String query = "insert into question values( '" + id + "' , '" + q.getQuestion() + "','" + q.getType() + "','" + survey + "','" + email +"');" ;
+		PreparedStatement stmt;
+		try {
+			stmt = conn.prepareStatement("query");
+			stmt.executeUpdate();
+		}
+		catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	

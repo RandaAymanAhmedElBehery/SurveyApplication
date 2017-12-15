@@ -1,11 +1,14 @@
 package com.SurveyApplication.Models;
 
+import java.util.ArrayList;
+
 public class Survey {
 	
 	private String surveyName ;
 	private String creatorEmail	;
     private boolean isClosed ;
     private boolean isSuspended ;
+    private ArrayList<Question> questions;
     
 	public Survey(String surveyName, String creatorEmail, boolean isClosed, boolean isSuspended)
 	{
@@ -14,6 +17,7 @@ public class Survey {
 		this.creatorEmail = creatorEmail;
 		this.isClosed = isClosed;
 		this.isSuspended = isSuspended;
+		questions = new ArrayList<Question>() ;
 	}
 	
 	public String getSurveyName() 
@@ -54,6 +58,16 @@ public class Survey {
 	public void setSuspended(boolean isSuspended) 
 	{
 		this.isSuspended = isSuspended;
+	}
+
+	public ArrayList<Question> getQuestions() 
+	{
+		return questions;
+	}
+
+	public void setQuestions(ArrayList<Question> questions) 
+	{
+		this.questions = questions;
 	}
     
     

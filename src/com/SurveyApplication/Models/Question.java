@@ -1,12 +1,14 @@
 package com.SurveyApplication.Models;
 
+import java.util.ArrayList;
+
 public class Question 
 {
 	private String question;
 	private String type ;
-	private String[] choices;
+	private ArrayList<String> choices;
 
-	public Question(String question, String type, String[] choices)
+	public Question(String question, String type, ArrayList<String> choices)
 	{
 		super();
 		this.question = question;
@@ -34,12 +36,12 @@ public class Question
 		this.type = type;
 	}
 	
-	public String[] getChoices() 
+	public ArrayList<String> getChoices() 
 	{
 		return choices;
 	}
 	
-	public void setChoices(String[] choices)
+	public void setChoices(ArrayList<String> choices)
 	{
 		this.choices = choices;
 	} 

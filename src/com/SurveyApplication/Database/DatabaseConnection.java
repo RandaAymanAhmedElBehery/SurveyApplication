@@ -14,7 +14,7 @@ public class DatabaseConnection
 		
 		try
 		{
-			conn = DriverManager.getConnection
+			this.conn = DriverManager.getConnection
 					("jdbc:mysql://localhost:3306/SurveyApplication", "root","");
 		}
 		catch(SQLException Ex)

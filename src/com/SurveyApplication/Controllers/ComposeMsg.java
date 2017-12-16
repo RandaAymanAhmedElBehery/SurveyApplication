@@ -2,6 +2,9 @@ package com.SurveyApplication.Controllers;
 
 import java.io.IOException;
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 import javax.servlet.ServletException;
 import javax.servlet.ServletRequest;
@@ -44,14 +47,24 @@ public class ComposeMsg extends HttpServlet {
 		{
 			if (emails[i].equals(""))
 				continue; 
-			String query = "insert into messages values (" + msgID + ",'" + msg +"');" ;
-			String query2 = "insert into userMsg values (" + emails[i] + ",'" + msgID +"');" ;
+			String query = "insert into messages (msg) values ('" + msg +"');" ;
 			
 			PreparedStatement stmt;
 			try 
 			{	
 				stmt = conn.prepareStatement(query);
 				stmt.executeUpdate();
+				int msgID = 0 ;
+				query = "select max(msgID) from Messages ;" ;
+				stmt = conn.prepareStatement(query);
+				ResultSet rs = stmt.executeQuery();
+				while (rs.next())
+				{
+					msgID = rs.getInt(0);
+				}
+				
+				String query2 = "insert into userMsg values (" + emails[i] + ",'" + msgID +"');" ;
+				
 				stmt = conn.prepareStatement(query2);
 				stmt.executeUpdate();	
 			}

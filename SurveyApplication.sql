@@ -70,13 +70,17 @@ create table answeredQuestions
 
 create table Messages
 (
-	msgID	varchar(50)		primary key,
-	msg		varchar(500)
+	msgID	int		auto_increment,
+	msg		varchar(500),
+    primary key (msgID)
 );
 
 create table userMsg
 (
 	email	varchar(100),
-	msgID	varchar(50),
-	primary key (email, msgID)
+	msgID	int,
+	primary key (email, msgID),
+    foreign key (email) references users(email),
+    foreign key (msgID) references Messages(msgID)
 );
+

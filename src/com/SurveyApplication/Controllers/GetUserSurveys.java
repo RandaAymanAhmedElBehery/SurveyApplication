@@ -53,7 +53,7 @@ public class GetUserSurveys extends HttpServlet {
 		{
 			e.printStackTrace();
 		}
-		
+		response.sendRedirect("UserProfile.jsp");
 	}
 
 	/**

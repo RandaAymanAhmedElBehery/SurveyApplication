@@ -73,6 +73,7 @@ public class ComposeMsg extends HttpServlet {
 				e.printStackTrace();
 			}	
 		}
+		response.sendRedirect("Dashboard.jsp");
 		
 	}
 

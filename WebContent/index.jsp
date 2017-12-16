@@ -19,7 +19,7 @@
 </form>
 
 
-<form action="register">
+<form action="Registering">
 
 <input type = "text" placeholder= "enter your name " name = "name"/>
 <input type= "email" placeholder = "enter your email" name = "email"/>

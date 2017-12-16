@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -35,11 +36,11 @@ public class Registering extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession();
-		String email= (String) session.getAttribute("email");
-		String name= (String) session.getAttribute("name");
-		String password =(String) session.getAttribute("password");
-		
+		//HttpSession session = request.getSession();
+		String email= (String) request.getParameter("email");
+		String name= (String) request.getParameter("name");
+		String password =(String) request.getParameter("password");
+		//System.out.println(email+name+password);
 		String q="select email from users";
 		DatabaseConnection dbc = new DatabaseConnection();
 		dbc.connect();
@@ -52,18 +53,20 @@ public class Registering extends HttpServlet {
 			while(rs.next())
 			{
 				String retrivedEmail = rs.getString("email");
-				if(retrivedEmail==email)
+				if(retrivedEmail.equals(email))
 					{
 						found=true;
+						response.sendRedirect("index.jsp");
 						break;
 						
 					}
 			}
 			if (found==false)
 			{
-				q="insert into users (email,name,password) values ('"+email+"','"+name+"','"+password+"'";
+				q="insert into users (email,userName,pass,isSuspended,isAdmin) values ('"+email+"','"+name+"','"+password+"','"+(int)0+"','"+(int)0+"')";
 				ps=c.prepareStatement(q);
 				ps.executeUpdate();
+				
 			}
 			}
 			catch (SQLException e) {

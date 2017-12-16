@@ -91,7 +91,7 @@ public class AddSurvey extends HttpServlet {
 		DatabaseConnection dbc = new DatabaseConnection();
 		Connection conn = dbc.getConnection();
 		String query = "insert into Surveys values ('" + survey.getSurveyName() + "','"
-						+ survey.getCreatorEmail()+  "', false,false);";
+						+ session.getAttribute("email")+  "', false,false);";
 		
 		PreparedStatement stmt;
 		try {

@@ -14,9 +14,17 @@
 		<script src="js/jquery.min.js" ></script>
 		
 		<script>
+			var survey ;
 			var questionArr = [] ;
 			var i = 0 ;
 			var choices = [] ;
+			
+			function sendData()
+			{
+				name = $("#surveyName").val ;
+				survey ={ "surveyName" : name , "questions" : questionArr};
+				document.location.href ="AddSurvey?survey="+survey;
+			}
 			
 			function newQuestion()
 			{
@@ -42,7 +50,6 @@
 				}
 				
 				ch = document.getElementById("choice"+i).value; 
-					//$("#choice"+ i ).val();
 				alert(ch);
 				choices.push(ch);
 				i++;
@@ -51,9 +58,9 @@
 			
 		</script>
 	
-		<form action="AddSurvey" id="form">
+		<form id="form" onsubmit="sendData()">
 		
-			<input type="text" placeholder="Survey Name" name="surveyName"/>
+			<input type="text" placeholder="Survey Name" name="surveyName" id="surveyName"/>
 			<br><br>
 			<input type="text" placeholder="Question" name="question" id="question"/>
 			<br><br>

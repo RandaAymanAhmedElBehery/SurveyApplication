@@ -67,3 +67,16 @@ create table answeredQuestions
     foreign key(questionNumber,surveyName,creatorEmail) references Questions(questionNumber,surveyName,creatorEmail)
     
 );
+
+create table Messages
+(
+	msgID	varchar(50)		primary key,
+	msg		varchar(500)
+);
+
+create table userMsg
+(
+	email	varchar(100),
+	msgID	varchar(50),
+	primary key (email, msgID)
+);

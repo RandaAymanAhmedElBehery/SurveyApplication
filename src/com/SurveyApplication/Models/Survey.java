@@ -10,6 +10,15 @@ public class Survey {
     private boolean isSuspended ;
     private ArrayList<Question> questions;
     
+    public Survey()
+    {
+    	super();
+    	this.surveyName="";
+    	this.creatorEmail="";
+    	this.isClosed=false;
+    	this.isSuspended=false;
+    	this.questions= new ArrayList<Question>();
+    }
 	public Survey(String surveyName, String creatorEmail, boolean isClosed, boolean isSuspended)
 	{
 		super();

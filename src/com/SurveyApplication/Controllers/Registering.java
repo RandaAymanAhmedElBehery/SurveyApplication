@@ -67,6 +67,7 @@ public class Registering extends HttpServlet {
 				ps=c.prepareStatement(q);
 				ps.executeUpdate();
 				
+				
 			}
 			}
 			catch (SQLException e) {

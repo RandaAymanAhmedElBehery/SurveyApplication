@@ -104,7 +104,7 @@ public class AddSurvey extends HttpServlet {
 		}
 		
 		addQuestions(survey.getSurveyName(), survey.getCreatorEmail(), survey.getQuestions());
-		
+		response.sendRedirect("UserProfile.jsp");
 	}
 
 	/**

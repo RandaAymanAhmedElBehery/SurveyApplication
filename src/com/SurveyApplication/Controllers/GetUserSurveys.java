@@ -59,8 +59,9 @@ public class GetUserSurveys extends HttpServlet {
 		{
 			e.printStackTrace();
 		}
-		session.setAttribute("userSurvys",Surveys);
+		session.setAttribute("userSurveys",Surveys);
 		
+		response.sendRedirect("UserProfile.jsp");
 	}
 
 	/**

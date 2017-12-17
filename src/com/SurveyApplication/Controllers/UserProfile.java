@@ -60,6 +60,7 @@ public class UserProfile extends HttpServlet {
 				e.printStackTrace();
 			}
 			session.setAttribute("userSurveys" , surveys) ;
+			response.sendRedirect("UserProfile.jsp");
 	}
 
 	/**

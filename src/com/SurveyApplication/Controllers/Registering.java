@@ -74,8 +74,6 @@ public class Registering extends HttpServlet {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
-	
 	
 	}
 

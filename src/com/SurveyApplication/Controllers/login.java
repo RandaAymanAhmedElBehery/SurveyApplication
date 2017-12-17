@@ -1,12 +1,21 @@
 package com.SurveyApplication.Controllers;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+
+import com.SurveyApplication.Database.DatabaseConnection;
+import com.SurveyApplication.Models.Report;
 
 /**
  * Servlet implementation class login
@@ -30,9 +39,36 @@ public class login extends HttpServlet {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
 		String email= (String) request.getParameter("email");
-		session.setMaxInactiveInterval(3*60);
-		session.setAttribute("email", email);
-		response.sendRedirect("UserProfile");
+		String pass= (String) request.getParameter("password");
+		
+		DatabaseConnection dbc = new DatabaseConnection(); 
+		Connection conn = dbc.getConnection();
+		String query = "select * from users where email = '" +email+ "' and pass ='" + pass + "';";
+		try {
+			PreparedStatement stmt = conn.prepareStatement(query);
+			ResultSet rs = stmt.executeQuery();
+			
+			if (rs.next())
+			{
+				session.setMaxInactiveInterval(3*60);
+				session.setAttribute("email", email);
+				if (rs.getBoolean(3) == true)
+				{
+					response.sendRedirect("Dashboard");
+				}
+				else
+					response.sendRedirect("UserProfile");
+			}
+			else
+			{
+				response.sendRedirect("index.jsp");
+			}
+			
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	
 		
 		
 	}

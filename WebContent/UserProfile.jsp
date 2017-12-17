@@ -33,22 +33,17 @@
 	<body>
 		
 		<form action="AddSurvey">
-			<input type="text" name="surveyName">
+			<input type="submit" value="surveyName">
 		</form>
 
 		<form action="ChangePass">
-			<input type="text" name="changePass">
+			<input type="submit" value="changePass">
 		</form>
 
 
 		<form action="Logout">
-			<input type="text" name="surveyName">
+			<input type="submit" value="surveyName">
 		</form>
-
-
-		<form action="">
-		</form>
-
 		
 		<%
 		

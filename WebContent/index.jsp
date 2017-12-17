@@ -14,8 +14,8 @@
 	<form action="login" method=get id="login">
 
 
-		<input type="email" placeholder="enter your email" name="email" /> <input
-			type="password" placeholder="enter your password" name="password" />
+		<input type="email" placeholder="enter your email" name="email" /> 
+		<input type="password" placeholder="enter your password" name="password" />
 		<input type="submit" value="login" />
 
 	</form>

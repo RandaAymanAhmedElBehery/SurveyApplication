@@ -16,6 +16,15 @@ public class Question
 		this.choices = choices;
 	}
 	
+	public Question() {
+		super();
+		this.question="";
+		this.type="";
+		this.choices = new ArrayList<String>();
+		
+		
+	}
+
 	public String getQuestion() 
 	{
 		return question;

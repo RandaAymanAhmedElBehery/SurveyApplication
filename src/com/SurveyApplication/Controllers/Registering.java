@@ -66,9 +66,10 @@ public class Registering extends HttpServlet {
 						+ "','" + password + "','" + (int) 0 + "','" + (int) 0 + "')";
 				ps = c.prepareStatement(q);
 				ps.executeUpdate();
-
+				
 			}
-		} catch (SQLException e) {
+			}
+		catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

@@ -32,10 +32,28 @@
 	</head>
 	<body>
 		
+		<form action="AddSurvey">
+			<input type="text" name="surveyName">
+		</form>
+
+		<form action="ChangePass">
+			<input type="text" name="changePass">
+		</form>
+
+
+		<form action="Logout">
+			<input type="text" name="surveyName">
+		</form>
+
+
+		<form action="">
+		</form>
+
+		
 		<%
 		
 		ArrayList<Survey> surveys = (ArrayList<Survey>)session.getAttribute("userSurveys") ;
-			
+			System.out.println(surveys);
 			for (int i=0 ; i<surveys.size() ; i++)
 			{
 				%>

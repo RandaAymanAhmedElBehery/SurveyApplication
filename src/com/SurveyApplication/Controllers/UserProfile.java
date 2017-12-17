@@ -48,7 +48,6 @@ public class UserProfile extends HttpServlet {
 			{
 				PreparedStatement stmt = conn.prepareStatement(query);
 				ResultSet rs = stmt.executeQuery();
-				
 				while (rs.next())
 				{
 					surveys.add(new Survey(rs.getString(0) , rs.getString(1) , rs.getBoolean(2), rs.getBoolean(3)) );

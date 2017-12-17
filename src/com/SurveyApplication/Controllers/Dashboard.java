@@ -1,11 +1,6 @@
 package com.SurveyApplication.Controllers;
 
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -14,19 +9,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import java.sql.*;
+import java.util.ArrayList;
+
 import com.SurveyApplication.Database.DatabaseConnection;
+import com.SurveyApplication.Models.Report;
 
 /**
- * Servlet implementation class SurveyController
+ * Servlet implementation class AdminController
  */
-@WebServlet("/GetUserSurveys")
-public class GetUserSurveys extends HttpServlet {
+@WebServlet("/Dashboard")
+public class Dashboard extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public GetUserSurveys() {
+    public Dashboard() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -35,31 +34,26 @@ public class GetUserSurveys extends HttpServlet {
 	 * @see HttpServlet#doGet(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(true);
-		String email = (String)request.getAttribute("email");
-		
-		DatabaseConnection dbConn = new DatabaseConnection() ;
-		dbConn.connect(); 
-		Connection conn = dbConn.getConnection();
-		
-		String query = "select surveyName from Surveys where CreatorEmail = '" + email + "';" ;
-    	ArrayList<String> Surveys = new ArrayList<String>();
-		try
-		{
+		DatabaseConnection dbc = new DatabaseConnection(); 
+		Connection conn = dbc.getConnection();
+		String query = "select * from reports;";
+		ArrayList<Report> reports = new ArrayList<Report>();
+		try {
 			PreparedStatement stmt = conn.prepareStatement(query);
-        	ResultSet rs = stmt.executeQuery();
-        	while(rs.next())
-        	{
-        		Surveys.add(rs.getString("surveyName"));
-        	}
-        	
-		}
-		catch(SQLException e)
-		{
+			ResultSet rs = stmt.executeQuery();
+			
+			while (rs.next())
+			{
+				reports.add(new Report(rs.getString(1),rs.getString(0),rs.getString(2),rs.getString(3)));
+			}
+			
+			HttpSession session = request.getSession();
+			session.setAttribute("reports", reports);
+			response.sendRedirect("Dashboard.jsp");
+			
+		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		session.setAttribute("userSurveys",Surveys);
 		
 	}
 

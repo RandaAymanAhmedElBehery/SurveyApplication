@@ -32,7 +32,7 @@ public class login extends HttpServlet {
 		String email= (String) request.getParameter("email");
 		session.setMaxInactiveInterval(3*60);
 		session.setAttribute("email", email);
-		response.sendRedirect("UserProfile.jsp");
+		response.sendRedirect("UserProfile");
 		
 		
 	}

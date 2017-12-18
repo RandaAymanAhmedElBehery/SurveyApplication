@@ -19,17 +19,24 @@
 			var i = 0 ;
 			var choices = [] ;
 			
+		
 			function sendData()
-			{
-				name = $("#surveyName").val ;
+			{	
+				newQuestion();
+				name = $("#surveyName").val();
 				survey ={ "surveyName" : name , "questions" : questionArr};
-				document.location.href ="AddSurvey?survey="+survey;
+
+				document.cookie = "survey=" + survey;
+				console.log(questions);
+				alert(name);
+				
+				/*document.location.href ="AddSurvey";*/
 			}
 			
 			function newQuestion()
 			{
-				questionTxt = document.getElementById("question").value;
-				document.getElementById("question").value="";
+				var questionTxt = $("#question").val();
+				$("#question").val("");
 				
 				var questionType = document.getElementById("questionType");
 				qtype = questionType.options[questionType.selectedIndex].text;
@@ -58,7 +65,7 @@
 			
 		</script>
 	
-		<form id="form" onsubmit="sendData()">
+		<form id="form" action="AddSurvey" >
 		
 			<input type="text" placeholder="Survey Name" name="surveyName" id="surveyName"/>
 			<br><br>
@@ -70,7 +77,7 @@
 				<option value = "checkbox" >Check Boxes</option>
 			</select>
 			<br><br>
-			<input type="submit" value="Save Survey">
+			<input type="submit" value="Save Survey" onclick="sendData()">
 		</form>
 		
 		<button id="addChoice" onclick="addChoice()" >Add Choice</button>

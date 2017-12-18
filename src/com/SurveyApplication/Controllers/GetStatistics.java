@@ -12,22 +12,20 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 
 import com.SurveyApplication.Database.DatabaseConnection;
-import com.SurveyApplication.Models.Report;
 
 /**
- * Servlet implementation class login
+ * Servlet implementation class GetStatistics
  */
-@WebServlet("/login")
-public class login extends HttpServlet {
+@WebServlet("/GetStatistics")
+public class GetStatistics extends HttpServlet {
 	private static final long serialVersionUID = 1L;
        
     /**
      * @see HttpServlet#HttpServlet()
      */
-    public login() {
+    public GetStatistics() {
         super();
         // TODO Auto-generated constructor stub
     }
@@ -37,43 +35,40 @@ public class login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
-		HttpSession session = request.getSession(true);
-		String email= (String) request.getParameter("email");
-		String pass= (String) request.getParameter("password");
+		String surveyName = request.getParameter("surveyName");
+		String email = request.getParameter("creatorEmail");
 		
-		DatabaseConnection dbc = new DatabaseConnection(); 
+		DatabaseConnection dbc = new  DatabaseConnection();
 		Connection conn = dbc.getConnection();
-		String query = "select * from users where email = '" +email+ "' and pass ='" + pass + "';";
-		System.out.println(email);
+		
+		ArrayList<Integer> freq  = new ArrayList<Integer>();  
+		String query = "select count(questionNumber) from Questions where surveyName = '" + surveyName + "' and "
+				+ "creatorEmail = '" + email + "';";
+		PreparedStatement stmt;
 		try {
-			PreparedStatement stmt = conn.prepareStatement(query);
-			ResultSet rs = stmt.executeQuery();
+			stmt = conn.prepareStatement(query);
+		
+			ResultSet rs = stmt.executeQuery() ;
 			
 			if (rs.next())
 			{
-				session.setMaxInactiveInterval(3*60);
-				session.setAttribute("email", email);
-				if (rs.getBoolean("isAdmin") == true)
+				for (int i=1 ; i<rs.getInt(0)+1 ; i++)
 				{
-					response.sendRedirect("Dashboard");
-				}
-				else
-				{
-					response.sendRedirect("UserProfile");
+					query = "select count(*) from answeredQuestions where questionNumber = " + i
+							+ " and creatorEmail = '" + email + "' and surveyName = '" + surveyName
+							+ "' ;";
+					stmt = conn.prepareStatement(query);
+					rs = stmt.executeQuery() ;
+					if (rs.next())
+						freq.add(rs.getInt(0));
 				}
 			}
-			else
-			{
-				response.sendRedirect("index.jsp");
-			}
-			
-			
+		
 		} catch (SQLException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-	
-		
-		
+		response.sendRedirect("ViewStatistics.jsp?data=" + freq);
 	}
 
 	/**

@@ -32,17 +32,17 @@
 	</head>
 	<body>
 		
-		<form action="AddSurvey">
-			<input type="submit" value="surveyName">
+		<form action="AddSurvey.jsp">
+			<input type="submit" value="Add Survey">
 		</form>
 
-		<form action="ChangePass">
+		<form action="ChangePass.jsp">
 			<input type="submit" value="changePass">
 		</form>
 
 
 		<form action="Logout">
-			<input type="submit" value="surveyName">
+			<input type="submit" value="logout">
 		</form>
 		
 		<%

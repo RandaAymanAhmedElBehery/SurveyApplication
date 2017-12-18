@@ -27,7 +27,7 @@
 		<script>
 		$(document).ready(function(){
 			$.ajax({
-				url: "getSurveyDetails?surveyName=" + <%=session.getAttribute("surveyName")%>
+				url: "GetStatistics?surveyName=" + <%=session.getAttribute("surveyName")%>
 									+ "&creatorEmail=" + <%=session.getAttribute("email")%> ,
 				method: "GET",
 				success: function(data) {

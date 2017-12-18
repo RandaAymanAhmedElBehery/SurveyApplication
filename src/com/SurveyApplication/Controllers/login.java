@@ -5,7 +5,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -59,7 +58,7 @@ public class login extends HttpServlet {
 					response.sendRedirect("Dashboard");
 				}
 				else
-				{	RequestDispatcher rd= request.getRequestDispatcher("getAllSurvey");
+				{	RequestDispatcher rd= request.getRequestDispatcher("getAllSurveys");
 					session.setAttribute("userName", rs.getString("userName"));
 					rd.forward(request, response);
 				}

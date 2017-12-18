@@ -12,31 +12,30 @@
 	
 	<body>
 	
-		<form>
-			
-			<input id="Receipent" type="text" >
 			<button id="btn" onclick = "addReceipent()">Add Receipent</button>
+
+		<form action="ComposeMsg">			
 			<input type="text" id="rec0">
-			<textarea rows="10" cols="50" placeholder="your message here"> </textarea>
+			<textarea rows="10" cols="50" placeholder="your message here" name="msg"> </textarea>
 			<input type="submit" value="Send" onclick = "sendData()">
 			
 		</form>
 				
 		<script>
 			
-			var emails = [] ;
+			var emails ="" ;
 			var i=0 ;
 			
 			function addReceipent()
 			{
-				emails.push($("#rec" + i).val);
+				emails+=($("#rec" + i).val) + ";";
 				i++ ;
 				$("form").append('<input type="text" id="rec' + i +'">');
 			}
 			
 			function sendData ()
 			{
-				document.location.href ="ComposeMsg?emails="+emails;
+				$("form").append("<input type='hidden' id='emails' value='"+emails +"'  name='emails' />");
 			}
 			
 		</script>

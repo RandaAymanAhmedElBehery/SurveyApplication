@@ -37,8 +37,10 @@ public class ComposeMsg extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException 
 	{	
 		HttpSession session = request.getSession();
-		String[] emails = (String[])request.getAttribute("emails");
-		String msg = (String) session.getAttribute("msg");
+		String allEmails = (String)request.getParameter("emails");
+		String[] emails = allEmails.split(";");
+		
+		String msg = (String) request.getParameter("msg");
 		
 		DatabaseConnection dbc = new DatabaseConnection();
 		Connection conn = dbc.getConnection();

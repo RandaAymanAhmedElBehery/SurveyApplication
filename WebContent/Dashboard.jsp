@@ -25,8 +25,12 @@
 			<input type="submit" value="showUsers">
 		</form>
 		
-		<form action="composeMsg.jsp">
-			<input type="submit" value="showUsers">
+		<form action="ComposeMsg.jsp">
+			<input type="submit" value="Compose Msg">
+		</form>
+
+		<form action="getAllSurveys">
+			<input type="submit" value="show All Surveys">
 		</form>
 
 		<%

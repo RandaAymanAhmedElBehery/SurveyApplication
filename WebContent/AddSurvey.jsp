@@ -19,18 +19,12 @@
 			var i = 0 ;
 			var choices = [] ;
 			
-		
 			function sendData()
 			{	
 				newQuestion();
 				name = $("#surveyName").val();
 				survey ={ "surveyName" : name , "questions" : questionArr};
-
-				document.cookie = "survey=" + survey;
-				console.log(questions);
-				alert(name);
-				
-				/*document.location.href ="AddSurvey";*/
+				$("#form").append("<input type='hidden' id='survey' value='"+JSON.stringify(survey) +"'  name='survey' />");
 			}
 			
 			function newQuestion()
@@ -42,9 +36,11 @@
 				qtype = questionType.options[questionType.selectedIndex].text;
 
 				var question = {"question" : questionTxt , "type" : qtype , "choices" : choices};
+				questionArr.push(question);
+				
 				i = 0 ;
 				choices = [];
-				$("#form").remove(".choice");
+				$("input").remove(".choice");
 			}
 			
 			function addChoice()
@@ -56,7 +52,7 @@
 					$("#form").append('<input type="text" name="choice'+i+'" id="choice'+i+'" class="choice">');
 				}
 				
-				ch = document.getElementById("choice"+i).value; 
+				ch =  $("#choice" + i).id;
 				alert(ch);
 				choices.push(ch);
 				i++;
@@ -65,7 +61,7 @@
 			
 		</script>
 	
-		<form id="form" action="AddSurvey" >
+	 <form id="form" action="AddSurvey" > 
 		
 			<input type="text" placeholder="Survey Name" name="surveyName" id="surveyName"/>
 			<br><br>
@@ -78,7 +74,7 @@
 			</select>
 			<br><br>
 			<input type="submit" value="Save Survey" onclick="sendData()">
-		</form>
+	 	</form>	
 		
 		<button id="addChoice" onclick="addChoice()" >Add Choice</button>
 		<button value="next Question" onclick="newQuestion()">Next Question</button>

@@ -9,25 +9,7 @@
 		<meta http-equiv="Content-Type"
 			content="text/html; charset=windows-1256">
 		<title>Insert title here</title>
-	
-	<script>
-		
-		function viewSurvey(name)
-		{
-			document.location.href ="getSurveyDetails?surveyName="+name;
-		}
-		
-		function suspendSurvey(name)
-		{
-			document.location.href ="suspendSurvey?surveyName="+name;
-		}
-		
-		function closeSurvey(name)
-		{
-			document.location.href ="closeSurvey?surveyName="+name;
-		}
-	
-	</script>
+
 	
 	</head>
 	<body>
@@ -46,14 +28,11 @@
 		</form>
 		
 		<%
-		
-		ArrayList<Survey> surveys = (ArrayList<Survey>)session.getAttribute("userSurveys") ;
-			System.out.println(surveys);
+			ArrayList<Survey> surveys = (ArrayList<Survey>)session.getAttribute("userSurveys") ;
 			for (int i=0 ; i<surveys.size() ; i++)
 			{
 				%>
-					<h2 onclick="viewSurvey(<%=surveys.get(i).getSurveyName()%>)">
-							 <%= surveys.get(i).getSurveyName() %> </h2>
+					<h2 onclick="viewSurvey(this.innerHTML)"> <%= surveys.get(i).getSurveyName() %> </h2>
 					<%
 					if (surveys.get(i).isSuspended())
 					{ %>
@@ -64,13 +43,32 @@
 						{ %>
 							<label>Closed</label>
 					<%	}  %> 
-					<button onclick = "suspendSurvey(<%=surveys.get(i).getSurveyName()%>)">Suspend</button>
-					<button onclick = "closeSurvey(<%=surveys.get(i).getSurveyName()%>)" >Close</button>
+					<button onclick = "suspendSurvey(this.innerHTML)">Suspend</button>
+					<button onclick = "closeSurvey(this.innerHTML)" >Close</button>
 					
 		<%	}
 			
 			
 		%>		
+
+	
+	<script>
 		
+		function viewSurvey(name)
+		{
+			document.location.href ="getSurveyDetailes?surveyName="+name;
+		}
+		
+		function suspendSurvey(name)
+		{
+			document.location.href ="suspendSurvey?surveyName="+name;
+		}
+		
+		function closeSurvey(name)
+		{
+			document.location.href ="closeSurvey?surveyName="+name;
+		}
+	
+	</script>		
 	</body>
 </html>

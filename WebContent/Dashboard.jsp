@@ -17,6 +17,10 @@
 			<input type="submit" value="Logout">
 		</form>
 		
+		<form action="AddAdmin">
+			<input type="submit" value="AddAdmin">
+		</form>
+		
 		<form action="showUsers">
 			<input type="submit" value="showUsers">
 		</form>

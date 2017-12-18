@@ -44,13 +44,17 @@ public class UserProfile extends HttpServlet {
 			Connection conn = dbc.getConnection();
 			String query = "select * from Surveys where creatorEmail = '" + session.getAttribute("email") + "' ;" ;
 			
+			System.out.println(query);
+			
 			try
 			{
 				PreparedStatement stmt = conn.prepareStatement(query);
 				ResultSet rs = stmt.executeQuery();
+				System.out.println(rs);
 				while (rs.next())
 				{
-					surveys.add(new Survey(rs.getString(0) , rs.getString(1) , rs.getBoolean(2), rs.getBoolean(3)) );
+					System.out.println(rs.getString(1));
+					surveys.add(new Survey(rs.getString(1) , rs.getString(2) , rs.getBoolean(3), rs.getBoolean(4)) );
 				}
 
 			}

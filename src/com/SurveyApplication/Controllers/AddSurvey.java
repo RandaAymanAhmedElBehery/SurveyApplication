@@ -1,26 +1,20 @@
 package com.SurveyApplication.Controllers;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpCookie;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
-import org.json.JSONException;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import com.SurveyApplication.Database.DatabaseConnection;
@@ -65,7 +59,7 @@ public class AddSurvey extends HttpServlet {
 		Connection conn = dbc.getConnection();
 
 		for (int i = 0; i < q.size(); i++) {
-			String query = "insert into question values( '" + (i + 1) + "' , '" + q.get(i).getQuestion() + "','"
+			String query = "insert into questions values( '" + (i + 1) + "' , '" + q.get(i).getQuestion() + "','"
 					+ q.get(i).getType() + "','" + survey + "','" + email + "');";
 			PreparedStatement stmt;
 			try {
@@ -94,21 +88,37 @@ public class AddSurvey extends HttpServlet {
 		HttpSession session = request.getSession();
 
 		try {
-			Cookie[] cookies = request.getCookies();
-			Cookie current = new Cookie("survey","") ;
-			for (int i=0 ; i<cookies.length ; i++)
-			{
-				if (cookies[i].getName().equals("survey"))
-					current = cookies[i] ;
-			}
+			JSONObject jObj = new JSONObject(request.getParameter("survey")); 
 			
-			System.out.println("curr: " +current.getValue());
-			JSONObject jObj = new JSONObject(current.getValue()); 
+			System.out.println(jObj);
+			
 			Iterator it = jObj.keys(); // gets all the keys
-			while (it.hasNext()) {
-				String key = (String) it.next(); // get key
+			if  (it.hasNext()) {
 
-				Survey survey = (Survey) jObj.get(key);
+				String surveyName = (String) jObj.get("surveyName");
+				System.out.println(surveyName);
+				
+				JSONArray jsonarray =jObj.getJSONArray("questions");
+				ArrayList<Question> questions = new ArrayList<Question>();
+				
+				for (int i = 0; i < jsonarray.length(); i++) {
+				    JSONObject jsonobject = jsonarray.getJSONObject(i);
+				    String question = jsonobject.getString("question");
+				    String type = jsonobject.getString("type");
+				    
+					JSONArray jsonarray2 = jsonobject.getJSONArray("choices");
+				    ArrayList<String> choices = new ArrayList<String>();
+					for (int j = 0; j < jsonarray2.length(); j++) {
+						JSONObject jsonobject2 = jsonarray2.getJSONObject(j);
+						String choice = jsonobject2.getString("choice"+j);
+						choices.add(choice);
+					}
+					
+					questions.add( new Question(question , type , choices));
+				    
+				}
+				Survey survey = new Survey(surveyName , (String)session.getAttribute("email") , false , false );
+				survey.setQuestions(questions);
 				DatabaseConnection dbc = new DatabaseConnection();
 				Connection conn = dbc.getConnection();
 				String query = "insert into Surveys values ('" + survey.getSurveyName() + "','"
@@ -118,6 +128,7 @@ public class AddSurvey extends HttpServlet {
 				try {
 					stmt = conn.prepareStatement(query);
 					stmt.executeUpdate();
+					System.out.println(query);
 
 				} catch (SQLException e) {
 					// TODO Auto-generated catch block

@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -40,7 +41,8 @@ public class getAllSurveys extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		HttpSession session = request.getSession(true);
-		String  q= " select surveyName,isSuspended,isClosed from Surveys";
+		String userName= (String)session.getAttribute("userName");
+		String  q= " select surveyName,isSuspended,isClosed,creatorEmail from Surveys";
 		DatabaseConnection dbc = new DatabaseConnection();
 		dbc.connect();
 		ArrayList<Survey> surveys = new ArrayList<Survey>();
@@ -54,14 +56,18 @@ public class getAllSurveys extends HttpServlet {
 				s.setClosed(rs.getBoolean("isClosed"));
 				s.setSuspended(rs.getBoolean("isSuspended"));
 				s.setSurveyName(rs.getString("surveyName"));
+				s.setCreatorEmail(rs.getString("creatorEmail"));
 				surveys.add(s);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+		RequestDispatcher rd=request.getRequestDispatcher("Home.jsp");
 		session.setAttribute("Surveys", surveys);
+		session.setAttribute("userName", userName);
+		rd.forward(request, response);
+		
 	
 	}
 

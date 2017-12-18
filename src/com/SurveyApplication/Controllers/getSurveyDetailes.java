@@ -7,6 +7,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -72,7 +73,12 @@ public class getSurveyDetailes extends HttpServlet {
 			e.printStackTrace();
 		}
 		
+		RequestDispatcher rd= request.getRequestDispatcher("fillSurvey.jsp");
 		session.setAttribute("questions", questions);
+		session.setAttribute("surveyName", surveyName);
+		session.setAttribute("creatorEmail", creatorEmail);
+		rd.forward(request, response);
+		
 		
 	}
 
